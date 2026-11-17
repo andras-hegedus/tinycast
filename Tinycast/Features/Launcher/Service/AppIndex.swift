@@ -14,6 +14,7 @@ struct AppEntry: Identifiable, Hashable, Sendable {
         case windowRoom
         case quicklink
         case appleShortcut
+        case chromeBookmark
         case extensionCommand
         case meeting
 
@@ -80,6 +81,12 @@ struct AppEntry: Identifiable, Hashable, Sendable {
                     label: "Apple Shortcut", sectionTitle: "Apple Shortcuts",
                     openVerb: "Run Shortcut", canHideFromSearch: true,
                     canRevealInFinder: false, canDragOut: false, isSymbolIcon: false, rankPriority: 3)
+            case .chromeBookmark:
+                // File-backed so every row draws Chrome's own icon; last on a tie, there are many.
+                return KindDescriptor(
+                    label: "Chrome Bookmark", sectionTitle: "Chrome Bookmarks",
+                    openVerb: "Open in Chrome", canHideFromSearch: true,
+                    canRevealInFinder: false, canDragOut: false, isSymbolIcon: false, rankPriority: 0)
             case .extensionCommand:
                 // The label is per-entry, the owning extension's title; this is the fallback.
                 return KindDescriptor(
@@ -176,7 +183,7 @@ struct AppEntry: Identifiable, Hashable, Sendable {
         case .command, .quickAction, .customCommand, .systemAction, .windowCommand, .windowLayout,
             .windowRoom, .quicklink, .appleShortcut, .snippet:
             return HotKeyAction(entryID: id)
-        case .extensionCommand, .meeting:
+        case .extensionCommand, .meeting, .chromeBookmark:
             return nil
         }
     }
@@ -211,7 +218,8 @@ struct AppEntry: Identifiable, Hashable, Sendable {
         case .windowLayout: return WindowLayout.sfSymbol
         case .windowRoom: return Room.sfSymbol
         case .meeting: return "video.fill"
-        case .application, .systemSettings, .appleShortcut, .extensionCommand: return "questionmark"
+        case .application, .systemSettings, .appleShortcut, .chromeBookmark, .extensionCommand:
+            return "questionmark"
         }
     }
 
@@ -283,6 +291,13 @@ extension AppEntry {
         self.init(
             id: shortcut.entryID, name: shortcut.name, url: applicationURL, bundleID: nil,
             kind: .appleShortcut)
+    }
+
+    /// The address is the subtitle, so typing a domain finds a bookmark whatever its title.
+    init(_ bookmark: ChromeBookmark, iconURL: URL) {
+        self.init(
+            id: bookmark.entryID, name: bookmark.displayTitle, url: iconURL, bundleID: nil,
+            kind: .chromeBookmark, subtitle: bookmark.title.isEmpty ? nil : bookmark.displayURL)
     }
 }
 
@@ -384,6 +399,7 @@ final class AppIndex {
     private var windowRoomEntries: [AppEntry] = []
     private var quicklinkEntries: [AppEntry] = []
     private var appleShortcutEntries: [AppEntry] = []
+    private var chromeBookmarkEntries: [AppEntry] = []
     private var customQuickActionEntries: [AppEntry] = []
     private var extensionEntries: [AppEntry] = []
     private var meetingEntries: [AppEntry] = []
@@ -474,6 +490,13 @@ final class AppIndex {
     func setAppleShortcuts(_ entries: [AppEntry]) {
         guard entries != appleShortcutEntries else { return }
         appleShortcutEntries = entries
+        publishEntries()
+    }
+
+    /// Read from Chrome's profile folders, so it arrives already built and sorted.
+    func setChromeBookmarks(_ entries: [AppEntry]) {
+        guard entries != chromeBookmarkEntries else { return }
+        chromeBookmarkEntries = entries
         publishEntries()
     }
 
@@ -676,7 +699,8 @@ final class AppIndex {
         let updated =
             Self.named(meetingEntries) + discoveredEntries
             + Self.named(
-                extensionEntries + quicklinkEntries + appleShortcutEntries + snippetEntries
+                extensionEntries + quicklinkEntries + appleShortcutEntries + chromeBookmarkEntries
+                    + snippetEntries
                     + Self.systemActionEntries + windowLayoutEntries + windowRoomEntries
                     + windowCommandEntries
                     + customWindowSizeEntries + customCommandEntries + quickActionEntries
@@ -752,7 +776,9 @@ final class AppIndex {
             let suggested =
                 showsSuggestions ? suggestions(from: split.rest, usage: usage, hotKeys: hotKeys) : []
             let shown = Set((split.favorites + suggested).map(\.id))
-            let rest = byUsage(visible.filter { !shown.contains($0.id) }, usage: usage)
+            // Bookmarks answer a query; listed unasked, hundreds would bury every other section.
+            let rest = byUsage(
+                visible.filter { !shown.contains($0.id) && $0.kind != .chromeBookmark }, usage: usage)
             // Above Suggestions: a meeting is worth opening only until it ends.
             let meetings = rest.filter { $0.kind == .meeting }
             return Results(

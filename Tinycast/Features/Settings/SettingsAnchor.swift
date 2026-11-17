@@ -44,6 +44,9 @@ extension SettingsAnchor {
         tab: .appleShortcuts,
         title: LocalizedStringResource("apple-shortcuts-section", defaultValue: "Shortcuts"))
 
+    static let chromeBookmarksChromeBookmarks = Self(
+        tab: .chromeBookmarks, title: "Chrome Bookmarks")
+
     static let fallbacksFallbacks = Self(tab: .fallbacks, title: "Fallbacks")
 
     static let aiAI = Self(tab: .ai, title: "AI")

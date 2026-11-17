@@ -168,6 +168,7 @@ If a change touches anything in the right column, the harness on the left is man
 | `QuicklinkTests` | all of `Quicklinks/Model/`, plus editor drafts and placeholder selection |
 | `QuicklinkCoordinatorTests` | Opening and requested arguments, launcher editing, current enabled-state preservation, deletion during editing and feature gates; no platform effects or on-screen focus checks |
 | `AppleShortcutTests` | all of `AppleShortcuts/Model/` — the `shortcuts list` parser and entry ids |
+| `ChromeBookmarkTests` | all of `ChromeBookmarks/Model/` — the `Bookmarks` JSON parser, profile folders, merge and entry ids |
 | `SnippetsTests` | all of `Snippets/Model/` and `Snippets/Service/`, plus editor drafts, placeholder selection and `Platform/HealthTicker.swift` |
 | `NotesTests` | all of `Notes/Model/` and `Notes/Service/`, including the Markdown parser, edit plans and reveal policy, plus the real fuzzy matcher and signposts |
 | `NotesEditorTests` | the Notes editor, rendered and literal, with real TextKit 2 and AppKit editing objects: styling, reveal, layout fragments, keys, chords, checkboxes and links |
@@ -630,6 +631,13 @@ prefs, caches, TCC grants and login item, so this cannot disturb an installed co
 - Unchecking a row hides it from search, and its hotkey still fires
 - Deleting a shortcut in Shortcuts frees its alias and hotkey on the next launcher open
 - A shortcut that fails shows Tinycast's dialog with the tool's error
+
+### Chrome Bookmarks
+
+- Typing part of a bookmark's title or its domain lists it under Chrome Bookmarks with Chrome's icon
+- ↵ opens it in Chrome; with an empty query no bookmark is listed outside favorites and Suggestions
+- A bookmark added in Chrome appears on the next launcher open, and bookmarks from every profile show
+- Switching the category off in Settings empties the section; unchecking a row hides only that row
 
 ### File Search
 

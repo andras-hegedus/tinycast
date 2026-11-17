@@ -73,7 +73,7 @@ struct LauncherItemsList: View {
             Text(query.isEmpty ? emptyMessage : "No matches for “\(query)”.")
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .center)
-        } else if entries.first?.kind != .application && entries.first?.kind != .appleShortcut {
+        } else if ![.application, .appleShortcut, .chromeBookmark].contains(entries.first?.kind) {
             ForEach(entries) { entry in LauncherItemRow(entry: entry) }
         } else {
             // One row holding the table: a `Form` realizes every row it is handed.

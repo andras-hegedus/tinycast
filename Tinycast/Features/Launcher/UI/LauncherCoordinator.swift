@@ -145,6 +145,10 @@ final class LauncherCoordinator {
             core.appleShortcutCoordinator.run(id: id)
             return
         }
+        if app.kind == .chromeBookmark {
+            core.chromeBookmarkCoordinator.open(entryID: app.id)
+            return
+        }
         let previous = windowController.previousTarget
         paletteCoordinator.hidePalette(restoreFocus: false)
         switch app.kind {
@@ -157,7 +161,7 @@ final class LauncherCoordinator {
             guard let snippetID = StoredSnippet.id(fromEntryID: app.id) else { return }
             snippetCoordinator.expandSnippet(id: snippetID, target: previous)
         case .command, .quickAction, .customCommand, .systemAction, .windowCommand, .windowLayout,
-            .windowRoom, .quicklink, .appleShortcut, .extensionCommand, .meeting:
+            .windowRoom, .quicklink, .appleShortcut, .chromeBookmark, .extensionCommand, .meeting:
             break  // handled above
         }
     }

@@ -107,7 +107,7 @@ enum SettingsSearchCatalog {
 
     static let entries: [SettingsSearchEntry] =
         general + applications + systemSettings + systemActions + commands + quicklinks
-        + appleShortcuts + fallbacks + clipboard + snippets + fileSearch + windowManagement
+        + appleShortcuts + chromeBookmarks + fallbacks + clipboard + snippets + fileSearch + windowManagement
         + navigation + notes + calendar + emoji + ai + quickActions + dictation + extensions + permissions
         + backup + about
 
@@ -272,6 +272,13 @@ enum SettingsSearchCatalog {
         .init(
             group: .appleShortcutsShortcuts, "Aliases and shortcuts",
             keywords: ["alias", "hotkey", "hide"])
+    ]
+
+    private static let chromeBookmarks: [SettingsSearchEntry] = [
+        .init(pane: .chromeBookmarks, keywords: ["google chrome", "browser", "websites", "urls"]),
+        .init(
+            .chromeBookmarksChromeBookmarks, "Enable Chrome Bookmarks",
+            keywords: ["google chrome", "browser", "websites", "urls", "hide"])
     ]
 
     private static let fallbacks: [SettingsSearchEntry] = [
