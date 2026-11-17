@@ -76,6 +76,19 @@ Consequences worth knowing:
   enable Hyper in one build at a time so their keyboard owners do not compete. An identical mapping
   already installed by another build is left unowned.
 
+## Installing this fork's build
+
+`./Scripts/install-local.sh`, run on `prod` with a clean tree, builds the Release configuration as the
+stable channel (`Tinycast.app`, `com.abueammar.tinycast`) and installs it over `/Applications`. It signs
+with your first `Apple Development` identity, or `TINYCAST_SIGNING_IDENTITY`, falling back to
+`Tinycast Self-Signed`, so macOS keeps its permission grants across rebuilds. The version is the stable
+tag prod sits on.
+
+It quits the running app first and zips the installed one to
+`~/Library/Application Support/Tinycast Fork Backups/`, never into `/Applications`. A build signed by
+another team is kept as the `upstream` backup and never pruned; only the newest three `fork` backups are
+kept. Swapping from upstream's signature to yours makes macOS ask for every permission again.
+
 ## Editor
 
 Xcode works out of the box and needs nothing here. Everything below is optional, and which editor you
