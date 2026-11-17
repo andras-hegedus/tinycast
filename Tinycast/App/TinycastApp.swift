@@ -72,7 +72,7 @@ struct TinycastApp: App {
     private var menuBarCommands: some Commands {
         CommandGroup(replacing: .appInfo) {
             Button("About \(appName)") { AppCore.shared.settingsCoordinator.showAbout() }
-            if AppCore.shared.updateCoordinator.updatesItself {
+            if AppCore.shared.updateChecker.channel.updatesItself {
                 Button("Check for Updates…") { AppCore.shared.updateCoordinator.checkForUpdates() }
             }
         }
