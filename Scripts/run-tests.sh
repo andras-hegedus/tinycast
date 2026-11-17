@@ -138,6 +138,7 @@ run AppInstallationTests   $L/SearchRelevance.swift $L/ScriptRomanization.swift 
                            $L/LauncherMatch.swift $L/EntryNaming.swift $L/LauncherOrder.swift \
                            $L/LauncherRankingStore.swift $L/LauncherSuggestions.swift $L/SearchScopes.swift \
                            Tinycast/Features/Launcher/Service/AppIndex.swift \
+                           Tinycast/Features/ChromeBookmarks/Model/ChromeBookmark.swift \
                            Tinycast/Features/Launcher/Service/AppLauncher.swift \
                            Tinycast/Features/Launcher/Service/RunningAppsMonitor.swift \
                            Tinycast/Features/Launcher/Service/FavoritesStore.swift \
@@ -177,6 +178,7 @@ run LauncherSettingsFileTests \
                            Tinycast/Features/Snippets/Model/Snippet.swift \
                            Tinycast/Platform/LocalizedResource.swift
 run AppleShortcutTests     Tinycast/Features/AppleShortcuts/Model/*.swift
+run ChromeBookmarkTests    Tinycast/Features/ChromeBookmarks/Model/*.swift
 run CalcTests              Tinycast/Features/Calculator/Model/*.swift
 run index CalcPerformanceTests Tinycast/Features/Calculator/Model/*.swift
 run CalendarTests          Tinycast/Features/Calendar/Model/*.swift \
@@ -495,6 +497,7 @@ run DeepLinkTests          Tinycast/Features/DeepLinks/Model/DeepLink.swift \
                            Tinycast/Features/SystemActions/Model/SystemAction.swift \
                            Tinycast/Features/CustomCommands/Model/CustomCommand.swift \
                            Tinycast/Features/AppleShortcuts/Model/AppleShortcut.swift \
+                           Tinycast/Features/ChromeBookmarks/Model/ChromeBookmark.swift \
                            Tinycast/Features/Snippets/Model/Snippet.swift \
                            Tinycast/Features/WindowManagement/Model/WindowCommand.swift \
                            Tinycast/Features/WindowManagement/Model/WindowCycle.swift \

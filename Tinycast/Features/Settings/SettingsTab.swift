@@ -1,6 +1,6 @@
 enum SettingsTab: CaseIterable, Identifiable {
     case general, applications, systemSettings, systemActions, commands, quicklinks, appleShortcuts,
-        fallbacks, clipboard, snippets, fileSearch, windowManagement, navigation, notes, calendar, emoji,
+        chromeBookmarks, fallbacks, clipboard, snippets, fileSearch, windowManagement, navigation, notes, calendar, emoji,
         dictation, ai, quickActions, extensions, permissions, backup, about
     /// The case, never an index: a selectable `List` flattens section and row IDs together.
     var id: Self { self }
@@ -20,6 +20,7 @@ enum SettingsTab: CaseIterable, Identifiable {
         case .commands: "commands"
         case .quicklinks: "quicklinks"
         case .appleShortcuts: "apple-shortcuts"
+        case .chromeBookmarks: "chrome-bookmarks"
         case .fallbacks: "fallbacks"
         case .clipboard: "clipboard"
         case .snippets: "snippets"
@@ -48,6 +49,7 @@ enum SettingsTab: CaseIterable, Identifiable {
         case .commands: return String(localized: "Commands")
         case .quicklinks: return String(localized: "Quicklinks")
         case .appleShortcuts: return String(localized: "Apple Shortcuts")
+        case .chromeBookmarks: return String(localized: "Chrome Bookmarks")
         case .fallbacks: return String(localized: "Fallbacks")
         case .ai: return String(localized: "AI")
         case .quickActions: return String(localized: "Quick Actions")
@@ -76,6 +78,7 @@ enum SettingsTab: CaseIterable, Identifiable {
         case .commands: return "terminal"
         case .quicklinks: return "link"
         case .appleShortcuts: return "square.2.layers.3d"
+        case .chromeBookmarks: return "bookmark"
         case .fallbacks: return "arrow.turn.down.right"
         case .ai: return "sparkles"
         case .quickActions: return "wand.and.sparkles"
@@ -117,7 +120,7 @@ enum SettingsSection: CaseIterable, Identifiable {
         case .launcher:
             return [
                 .applications, .systemSettings, .systemActions, .commands, .quicklinks,
-                .appleShortcuts, .fallbacks
+                .appleShortcuts, .chromeBookmarks, .fallbacks
             ]
         case .features:
             // Everyday tools first; AI and extensions are opt-in extras.

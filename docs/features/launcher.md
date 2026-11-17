@@ -620,6 +620,13 @@ it as its own slice right after Quicklinks, re-reading on every launcher open. O
 and the entry id is keyed on the shortcut's UUID, so an alias or binding survives a rename in
 Shortcuts. See [apple-shortcuts.md](apple-shortcuts.md).
 
+## Chrome bookmarks
+
+`ChromeBookmarkCoordinator` reads every Chrome profile's `Bookmarks` file and supplies them as their own
+slice right after Apple Shortcuts, re-checking on every launcher open. The title and the address are
+indexed, and with an empty query the slice is left out of the listing. See
+[chrome-bookmarks.md](chrome-bookmarks.md).
+
 ## Custom commands
 
 `CustomCommandStore` supplies user-authored entries to `AppIndex` without joining the off-main

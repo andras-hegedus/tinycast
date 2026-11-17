@@ -163,6 +163,9 @@ final class AppCore {
         settings: settings, appIndex: appIndex, hotKeys: hotKeys, favorites: favorites,
         visibility: visibility, ranking: launcherRanking, aliases: aliases,
         paletteCoordinator: paletteCoordinator, core: self)
+    @ObservationIgnored private(set) lazy var chromeBookmarkCoordinator = ChromeBookmarkCoordinator(
+        appIndex: appIndex, favorites: favorites, visibility: visibility, ranking: launcherRanking,
+        aliases: aliases, paletteCoordinator: paletteCoordinator, core: self)
     /// Window state, not a preference: it rides `UserDefaults` like the active note's filename.
     private nonisolated static let noteFormattingBarKey = "notesFormattingBarExpanded"
     @ObservationIgnored private(set) lazy var notesCoordinator = NotesCoordinator(
@@ -341,8 +344,10 @@ final class AppCore {
             quicklinks.load()
             quicklinkCoordinator.applyQuicklinksPresence()
             appleShortcutCoordinator.applyPresence()
+            chromeBookmarkCoordinator.refresh()
             paletteCoordinator.onLauncherShown = { [weak self] in
                 self?.appleShortcutCoordinator.refresh()
+                self?.chromeBookmarkCoordinator.refresh()
             }
             paletteCoordinator.onScreenOpening = { [weak self] mode in
                 switch mode {
