@@ -33,7 +33,7 @@ struct GeneralSettingsView: View {
                     SettingsRowTitle(.generalGeneral, "Show in menu bar")
                     Text("Shortcuts still work when the menu bar icon is hidden.")
                 }
-                if core.updateCoordinator.updatesItself {
+                if core.updateChecker.channel.updatesItself {
                     Toggle(isOn: $settings.automaticallyCheckForUpdates) {
                         SettingsRowTitle(.generalGeneral, "Automatically check for updates")
                         Text("You can still check for updates manually.")

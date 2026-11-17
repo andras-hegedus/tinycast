@@ -24,7 +24,7 @@ struct MenuBarMenu: View {
             }
         }
         Divider()
-        if AppCore.shared.updateCoordinator.updatesItself {
+        if AppCore.shared.updateChecker.channel.updatesItself {
             Button("Check for Updates…") { AppCore.shared.updateCoordinator.checkForUpdates() }
         }
         Button("Support \(appName)…") { AppCore.shared.supportCoordinator.showSupport() }
