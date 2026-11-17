@@ -51,7 +51,7 @@ codesign --verify --deep --strict "$BUILT"
 echo "Built and verified: $BUILT"
 
 if pgrep -xq "$APP_NAME"; then
-    echo "Quitting the running $APP_NAME…"
+    echo "Quitting the running ${APP_NAME}…"
     osascript -e "tell application id \"$BUNDLE_ID\" to quit" || true
     for _ in $(seq 1 30); do pgrep -xq "$APP_NAME" || break; sleep 1; done
     if pgrep -xq "$APP_NAME"; then
