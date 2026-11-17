@@ -4,6 +4,11 @@ By default, Tinycast checks GitHub Releases twice a day and offers the newest re
 channel in a pill in the palette, then installs it at the next relaunch or quit. There is no Sparkle
 and no appcast: the release feed the website already reads is the feed the app reads.
 
+**This fork switches the updater off.** `AppCore` hands `UpdateCheckStore` the `.development`
+channel, so every build behaves as a local build does: no check, download or install runs, the Check for Updates command
+is gone from the launcher, the menu bar and the app menu, and Settings → General hides the automatic
+checking toggle. Upstream's releases share this fork's bundle ids, so updating would replace it.
+
 ## Invariants
 
 - **Tinycast installs its own updates, and Homebrew stays out of the way.** Every cask declares

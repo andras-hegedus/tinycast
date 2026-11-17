@@ -52,7 +52,8 @@ final class AppCore {
     let regionNumberFormat = RegionNumberFormatMonitor()
     let calendarStore = CalendarStore()
     let meetingClock = MeetingClock()
-    let updateChecker = UpdateCheckStore()
+    /// This fork never updates: upstream's releases share its bundle ids and would replace it.
+    let updateChecker = UpdateCheckStore(channel: .development)
     let supportReminders: SupportReminderStore
     let emojiIndex = EmojiIndex()
     let frequentEmoji = FrequentEmojiStore()
